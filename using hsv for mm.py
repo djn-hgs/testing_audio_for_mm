@@ -1,7 +1,6 @@
 import math
 
 import pygame
-
 pygame.init()
 
 screen = pygame.display.set_mode((640, 240))
@@ -19,16 +18,22 @@ while running:
 
     x,y = pygame.mouse.get_pos()
 
-    a = math.atan2(y - screen.get_height()/ 2,x - screen.get_width()/2 ) * 180 / math.pi
+    cx, cy = screen.get_width()/2, screen.get_height()/ 2
 
-    if a < 0:
-        a += 360
+    h = math.atan2(y - cy,x - cx) * 180 / math.pi
+
+    if h < 0:
+        h += 360
+
+    s = math.sqrt((x-cx)**2 + (y-cy)**2)
+
+    if s > 100:
+        s = 100
+
+    mycolor.hsva = (h, s, 100)
 
 
-    mycolor.hsva = (a, 100, 100)
-
-
-    pygame.draw.circle(screen, mycolor, (screen.get_width()/2, screen.get_height()/2), 100)
+    pygame.draw.circle(screen, mycolor, (cx, cy), 100)
 
     pygame.display.flip()
 pygame.quit()
